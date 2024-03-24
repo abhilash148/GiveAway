@@ -30,7 +30,7 @@ const Dashboard = () => {
                  }}
                  />
                 <Tab.Screen
-                 name="Profile" 
+                 name="PROFILE"
                  component={Profile}
                  options={{
                     tabBarIcon: () => (
@@ -41,5 +41,11 @@ const Dashboard = () => {
             </Tab.Navigator>
     );
 };
+
+// const styles = StyleSheet.create({
+//
+//
+//
+// })
 
 export default Dashboard;

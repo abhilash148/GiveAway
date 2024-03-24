@@ -16,7 +16,7 @@ const Dashboard = () => {
                  component={Home}
                  options={{
                     tabBarIcon: () => (
-                        <Image source={require('./icons/edit_icon.png')} style={{width: 24, height: 24}}/>
+                        <Image source={require('./icons/Home.png')} style={{width: 24, height: 24}}/>
                     ),
                  }}
                 />
@@ -25,7 +25,7 @@ const Dashboard = () => {
                  component={Search}
                  options={{
                     tabBarIcon: () => (
-                        <Image source={require('./icons/edit_icon.png')} style={{width: 24, height: 24}}/>
+                        <Image source={require('./icons/search.png')} style={{width: 24, height: 24}}/>
                     ),
                  }}
                  />
@@ -34,7 +34,7 @@ const Dashboard = () => {
                  component={Profile}
                  options={{
                     tabBarIcon: () => (
-                        <Image source={require('./icons/edit_icon.png')} style={{width: 24, height: 24}}/>
+                        <Image source={require('./icons/profile.png')} style={{width: 24, height: 24}}/>
                     ),
                  }}
                  />

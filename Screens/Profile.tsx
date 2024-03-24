@@ -6,6 +6,8 @@ import favorites from "./icons/favorites.png";
 import share from './icons/share.png';
 import logout from './icons/logout.png';
 import profilePic from "./images/profilePic.webp";
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 const styles = StyleSheet.create({
     container: {
@@ -54,18 +56,18 @@ const styles = StyleSheet.create({
     },
 });
 
-const Profile = () => {
+const Profile = ({navigation}) => {
 
     return (
         <View style={styles.container}>
             <View style={styles.imgContainer}>
                 <Image source={profilePic} style={styles.image}/>
             </View>
-            <Items imageName={edit_icon} name="Edit profile"/>
-            <Items imageName={mygiveaways} name="My Giveaways"/>
-            <Items imageName={favorites} name="Favorites"/>
-            <Items imageName={share} name="Share"/>
-            <Items imageName={logout} name="Logout"/>
+            <Items navigation={navigation} imageName={edit_icon} name="Edit profile"/>
+            <Items navigation={navigation} imageName={mygiveaways} name="My Giveaways"/>
+            <Items navigation={navigation} imageName={favorites} name="Favorites"/>
+            <Items navigation={navigation} imageName={share} name="Share"/>
+            <Items navigation={navigation} imageName={logout} name="Logout"/>
         </View>
     );
 };
@@ -79,12 +81,26 @@ type optionProps = {
 
 const Items = (props: optionProps) => {
 
-    const handlePress = () => {
-        Alert.alert("Button pressed");
+    const handlePress = (name) => {
+        if (name == "Edit profile"){
+            props.navigation.navigate('EditProfile')
+        }
+        else if (name == "My Giveaways"){
+            props.navigation.navigate('MyGiveaways')
+        }
+        else if (name == "Favorites"){
+            props.navigation.navigate('Favorites')
+        }
+        else if (name == "Share"){
+            props.navigation.navigate('Share')
+        }
+        else if (name == "Logout"){
+            props.navigation.navigate('Logout')
+        }
     };
 
     return (
-    <TouchableOpacity onPress={handlePress}>
+    <TouchableOpacity onPress={() => handlePress(props.name)}>
         <View style={styles.options}>
             <Image source={props.imageName} style={styles.iconLeft}/>
             <Text style={styles.iconText}>{props.name}</Text>

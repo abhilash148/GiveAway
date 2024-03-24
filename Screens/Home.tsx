@@ -15,13 +15,13 @@ const styles = StyleSheet.create({
     },
 });
 
-const Home = () => {
+const Home = ({navigation}) => {
 
     return (
         <ScrollView style={styles.container}>
-            <Category/>
-            <Category/>
-            <Category/>
+            <Category navigation={navigation}/>
+            <Category navigation={navigation}/>
+            <Category navigation={navigation}/>
         </ScrollView>
     );
 

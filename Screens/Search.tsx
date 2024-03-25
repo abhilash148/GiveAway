@@ -1,11 +1,10 @@
 import React from "react";
 import { Text, View } from "react-native";
+import ItemsList from "./ItemsList";
 
-const Search = () => {
+const Search = ({navigation}) => {
     return (
-        <View style={{justifyContent: 'center', alignItems: 'center', flex: 1}}>
-            <Text>Search</Text>
-        </View>
+        <ItemsList navigation={navigation}></ItemsList>
     );
 };
 

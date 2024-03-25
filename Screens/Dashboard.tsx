@@ -5,6 +5,9 @@ import Search from "./Search";
 import Profile from "./Profile";
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Image } from "react-native";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import ItemsList from "./ItemsList";
 
 const Tab = createBottomTabNavigator();
 

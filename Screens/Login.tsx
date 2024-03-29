@@ -1,6 +1,6 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {View, StyleSheet, TextInput, Button, Alert, Pressable, Text} from 'react-native';
-
+import auth from '@react-native-firebase/auth';
 
 const styles = StyleSheet.create({
   container: {
@@ -62,6 +62,19 @@ const Login = ({navigation}) => {
   const [password, setPassword] = useState('');
   const [userName, setUserName] = useState('');
 
+  const handleLogin = ()=>{
+
+      useEffect(
+      async ()=>{try{
+          const userCredential = await auth().signInWithEmailAndPassword(userName,password);
+          navigation.navigate('Dashboard')
+      }catch (error) {
+             // Handle login errors
+             Alert.alert('Login failed' + error.message);
+           }
+           },[])
+  };
+
   return (
     <View style={[
       styles.container,
@@ -87,7 +100,7 @@ const Login = ({navigation}) => {
         defaultValue={password}
         />
 
-      <Pressable style={styles.button} onPress={() => navigation.navigate('Dashboard')}>
+      <Pressable style={styles.button} onPress={handleLogin}>
         <Text style={styles.text}>Login</Text>
       </Pressable>
 

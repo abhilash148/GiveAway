@@ -1,5 +1,6 @@
 import React, {useState} from "react";
-import { Text, View, StyleSheet, TextInput, Pressable } from "react-native";
+import { Text, View, StyleSheet, TextInput, Pressable, TouchableOpacity, Alert } from "react-native";
+import auth from "@react-native-firebase/auth";
 
 const styles = StyleSheet.create({
     container: {
@@ -70,6 +71,22 @@ const Signup = ({navigation}) => {
   const [userName, setUserName] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
 
+  const handleCreate = async ()=>{
+        try{
+            const response = await auth().createUserWithEmailAndPassword(userName,password);
+            Alert.alert("User created" + response);
+            navigation.navigate('Dashboard');
+        } catch(error){
+            if (error.code === 'auth/email-already-in-use') {
+                Alert.alert('Error', 'That email address is already in use!');
+              } else if (error.code === 'auth/invalid-email') {
+                Alert.alert('Error', 'That email address is invalid!');
+              } else {
+                Alert.alert('Error', 'An error occurred, please try again later.' + error);
+              }
+        }
+  }
+
   return (
     <View style={[
       styles.container,
@@ -104,9 +121,9 @@ const Signup = ({navigation}) => {
         keyboardType='numeric'
         />
 
-      <Pressable style={styles.button}>
+      <TouchableOpacity style={styles.button} onPress={handleCreate}>
         <Text style={styles.text}>Create an account</Text>
-      </Pressable>
+      </TouchableOpacity>
 
       <View style={styles.bottom}>
         <Text>Already have an account?</Text>

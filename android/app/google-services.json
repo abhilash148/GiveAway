@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "461979138905",
+    "project_id": "giveaway-b1e20",
+    "storage_bucket": "giveaway-b1e20.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:461979138905:android:13865ba360bc1b9c1aaa48",
+        "android_client_info": {
+          "package_name": "com.giveaway"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC8hqQ4zneHZT_6CrRgHFWlhp1oM-VSGiw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

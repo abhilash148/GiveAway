@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { StyleSheet, ScrollView, TextInput, Pressable, Text } from "react-native";
+import { StyleSheet, ScrollView, TextInput, Pressable, Text, TouchableOpacity, Alert } from "react-native";
+import firestore from '@react-native-firebase/firestore';
 
 const styles = StyleSheet.create({
     container: {
@@ -50,6 +51,23 @@ const NewGiveaway = () => {
     const [state, setState] = useState('');
     const [pincode, setPincode] = useState('');
 
+    const addGiveaway = async ()=>{
+        try{
+            const response = await firestore().collection('Giveaways').add({
+                title: title,
+                description: description,
+                address: address,
+                city: city,
+                state: state,
+                pincode: pincode
+            });
+            Alert.alert('Giveaway Added' + response);
+        }
+        catch (error) {
+            Alert.alert(error.message);
+        }
+    }
+
     return (
         <ScrollView style={styles.container}>
             <TextInput
@@ -95,9 +113,9 @@ const NewGiveaway = () => {
                 keyboardType='decimal-pad'
             />
 
-            <Pressable style={styles.button}>
+            <TouchableOpacity style={styles.button} onPress={addGiveaway}>
                 <Text style={styles.text}>Add Giveaway</Text>
-            </Pressable>
+            </TouchableOpacity>
             
         </ScrollView>
     );

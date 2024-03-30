@@ -62,18 +62,16 @@ const Login = ({navigation}) => {
   const [password, setPassword] = useState('');
   const [userName, setUserName] = useState('');
 
-  const handleLogin = ()=>{
-
-      useEffect(
-      async ()=>{try{
+  const handleLogin = async ()=>{
+  try{
           const userCredential = await auth().signInWithEmailAndPassword(userName,password);
           navigation.navigate('Dashboard')
-      }catch (error) {
+      }
+      catch (error) {
              // Handle login errors
              Alert.alert('Login failed' + error.message);
            }
-           },[])
-  };
+       };
 
   return (
     <View style={[

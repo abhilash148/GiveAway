@@ -1,6 +1,8 @@
 import React, { useState } from "react";
-import { StyleSheet, ScrollView, TextInput, Pressable, Text, TouchableOpacity, Alert } from "react-native";
-import firestore from '@react-native-firebase/firestore';
+import { View, StyleSheet, ScrollView, TextInput, Pressable, Text, TouchableOpacity, Alert, Image } from "react-native";
+import firestore from "@react-native-firebase/firestore";
+import storage from "@react-native-firebase/storage";
+import {launchImageLibrary} from 'react-native-image-picker';
 
 const styles = StyleSheet.create({
     container: {
@@ -40,6 +42,24 @@ const styles = StyleSheet.create({
         letterSpacing: 0.25,
         color: 'white',
       },
+      placeholder: {
+          width: 200,
+          height: 200,
+          backgroundColor: '#e0e0e0',
+          justifyContent: 'center',
+          alignItems: 'center',
+          borderRadius: 10,
+        },
+        placeholderText: {
+          fontSize: 16,
+          fontWeight: 'bold',
+          color: '#757575',
+        },
+        uploadImageView:{
+            flex:1,
+            alignItems:'center',
+            justifyContent: 'center'
+        }
 });
 
 const NewGiveaway = () => {
@@ -50,26 +70,64 @@ const NewGiveaway = () => {
     const [city, setCity] = useState('');
     const [state, setState] = useState('');
     const [pincode, setPincode] = useState('');
+    const [imageURL, setImageURL] = useState(null);
+
+    const uploadImage = ()=>{
+        launchImageLibrary({}, async response => {
+            if(response.errorMessage){
+                Alert.alert("Image Upload Error:" + response.errorMessage);
+            }
+            else if(response.didCancel){
+            }
+            else{
+                response.assets.map( asset => {
+                        const reference = storage().ref('images/' + asset.fileName);
+                        const task = reference.putFile(asset.uri);
+
+                        task.then(async ()=>{
+                            const downloadURL = await reference.getDownloadURL();
+                            setImageURL(downloadURL);
+                        });
+                    }
+                );
+            }
+        });
+    }
 
     const addGiveaway = async ()=>{
-        try{
-            const response = await firestore().collection('Giveaways').add({
-                title: title,
-                description: description,
-                address: address,
-                city: city,
-                state: state,
-                pincode: pincode
-            });
-            Alert.alert('Giveaway Added' + response);
+        if (imageURL !== null){
+            try{
+                const response = await firestore().collection('Giveaways').add({
+                    title: title,
+                    description: description,
+                    address: address,
+                    city: city,
+                    state: state,
+                    pincode: pincode,
+                    imageURL: imageURL
+                });
+                Alert.alert('Giveaway Added' + response);
+            }
+            catch (error) {
+                Alert.alert(error.message);
+            }
         }
-        catch (error) {
-            Alert.alert(error.message);
+        else{
+            Alert.alert("Please upload an image" + imageURL);
         }
     }
 
     return (
         <ScrollView style={styles.container}>
+
+            <View style={styles.uploadImageView}>
+            {imageURL?(<Image source={{uri:imageURL}} style={{ width: 200, height: 200 }} />):(
+                <TouchableOpacity onPress={uploadImage} style={styles.placeholder}>
+                     <Text style={styles.placeholderText}>Upload Image</Text>
+                </TouchableOpacity>
+            )}
+            </View>
+
             <TextInput
                 style={styles.input}
                 placeholder='Object Name'

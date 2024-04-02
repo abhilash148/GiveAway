@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {View, StyleSheet, TextInput, Button, Alert, Pressable, Text} from 'react-native';
 import auth from '@react-native-firebase/auth';
+import { useUsername } from './UsernameContext';
 
 const styles = StyleSheet.create({
   container: {
@@ -60,7 +61,7 @@ const styles = StyleSheet.create({
 const Login = ({navigation}) => {
 
   const [password, setPassword] = useState('');
-  const [userName, setUserName] = useState('');
+  const {userName, setUserName} = useUsername();
 
   const handleLogin = async ()=>{
   try{

@@ -1,6 +1,8 @@
-import React, { useState } from "react";
-import {View, Text, StyleSheet, ScrollView, TextInput, Pressable} from 'react-native';
+import React, { useState, useEffect } from "react";
+import {View, Text, StyleSheet, ScrollView, TextInput, Pressable, Alert} from 'react-native';
 import Item from "./Item";
+import firestore from "@react-native-firebase/firestore";
+import { useUsername } from './UsernameContext';
 
 
 const styles = StyleSheet.create({
@@ -14,6 +16,8 @@ const styles = StyleSheet.create({
     },
     row: {
         flexDirection: 'row',
+        flexWrap: 'wrap',
+        justifyContent: 'space-around'
     },
     search: {
         height: 40,
@@ -50,6 +54,28 @@ const styles = StyleSheet.create({
 
 const MyGiveaways = ({navigation}) => {
 
+    const [myGiveaways,setmyGiveaways] = useState([]);
+    const {userName, setUserName} = useUsername();
+
+    useEffect(()=>{ const getGiveaways = async ()=>{
+        try{
+
+            const queryOutput = await firestore().collection('Giveaways').where('userName','==',userName).get();
+
+            const fetchedGiveaways = queryOutput.docs.map(doc => ({id:doc.id, ...doc.data()}));
+            setmyGiveaways(fetchedGiveaways);
+        }
+        catch (error) {
+            Alert.alert(error.message);
+        }
+    }
+
+    const unsubscribe = navigation.addListener('focus',()=>{
+    getGiveaways()
+    });
+
+    return unsubscribe;
+    },[]);
 
     const handlePress = () => {
         navigation.navigate('ItemDescription');
@@ -74,30 +100,17 @@ const MyGiveaways = ({navigation}) => {
                 placeholder="Type here..."
             />
 
+
             <View style={styles.row}>
-                <Item onPress={handlePress}/>
-                <Item onPress={handlePress}/>
+            {myGiveaways.map(myGiveaway => (
+                <Item  key={myGiveaway.id}
+                       onPress={handlePress}
+                       id={myGiveaway.id}
+                       imgSrc = {myGiveaway.imageURL}
+                       objName = {myGiveaway.title}/>
+            ))}
             </View>
-            <View style={styles.row}>
-                <Item onPress={handlePress}/>
-                <Item onPress={handlePress}/>
-            </View>
-            <View style={styles.row}>
-                <Item onPress={handlePress}/>
-                <Item onPress={handlePress}/>
-            </View>
-            <View style={styles.row}>
-                <Item onPress={handlePress}/>
-                <Item onPress={handlePress}/>
-            </View>
-            <View style={styles.row}>
-                <Item onPress={handlePress}/>
-                <Item onPress={handlePress}/>
-            </View>
-            <View style={styles.row}>
-                <Item onPress={handlePress}/>
-                <Item onPress={handlePress}/>
-            </View>
+
         </ScrollView>
 
         <Pressable style={styles.button} onPress={() => navigation.navigate('NewGiveaway')}>

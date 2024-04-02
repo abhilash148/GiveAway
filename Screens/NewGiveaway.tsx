@@ -3,6 +3,8 @@ import { View, StyleSheet, ScrollView, TextInput, Pressable, Text, TouchableOpac
 import firestore from "@react-native-firebase/firestore";
 import storage from "@react-native-firebase/storage";
 import {launchImageLibrary} from 'react-native-image-picker';
+import { useUsername } from './UsernameContext';
+import RNPickerSelect from 'react-native-picker-select';
 
 const styles = StyleSheet.create({
     container: {
@@ -66,11 +68,13 @@ const NewGiveaway = () => {
 
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
+    const [category, setCategory] = useState('');
     const [address, setAddress] = useState('');
     const [city, setCity] = useState('');
     const [state, setState] = useState('');
     const [pincode, setPincode] = useState('');
     const [imageURL, setImageURL] = useState(null);
+    const {userName} = useUsername();
 
     const uploadImage = ()=>{
         launchImageLibrary({}, async response => {
@@ -95,16 +99,24 @@ const NewGiveaway = () => {
     }
 
     const addGiveaway = async ()=>{
-        if (imageURL !== null){
+        if (category == ''){
+            Alert.alert("Please select a category");
+        }
+        else if(category !== "KITCHEN" && category !== "LIVING ROOM" && category !== "BED ROOM"){
+            Alert.alert("Category is invalid, Refer Home Page");
+        }
+        else if (imageURL !== null){
             try{
                 const response = await firestore().collection('Giveaways').add({
                     title: title,
                     description: description,
+                    category:category,
                     address: address,
                     city: city,
                     state: state,
                     pincode: pincode,
-                    imageURL: imageURL
+                    imageURL: imageURL,
+                    userName: userName
                 });
                 Alert.alert('Giveaway Added' + response);
             }
@@ -140,7 +152,12 @@ const NewGiveaway = () => {
                 onChangeText={newText => setDescription(newText)}
                 defaultValue={description}
             />
-
+            <TextInput
+                style={styles.input}
+                placeholder='Category'
+                onChangeText={newText => setCategory(newText.toUpperCase())}
+                defaultValue={category}
+            />
             <TextInput
                 style={styles.input}
                 placeholder='Address'

@@ -5,6 +5,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         height: 150,
+        width: 180,
         flexDirection: 'column',
         margin: 8,
         borderWidth: 1,
@@ -34,15 +35,15 @@ const styles = StyleSheet.create({
     }
 });
 
-const Item = ({onPress}) => {
+const Item = ({onPress,id,imgSrc,objName}) => {
     return (
         <TouchableOpacity onPress={onPress}>
         <View style={styles.container}>
-                <Image source={require('./images/kitchen.png')} style={styles.image}/>
-                <View style={styles.bottom}>
-                    <Text>Study Table and Chair</Text>
-                    <Image source={require('./icons/heart.png')} style={styles.favourite}/>
-                </View>
+            <Image source={{uri:imgSrc}} style={styles.image}/>
+            <View style={styles.bottom}>
+                <Text>{objName}</Text>
+                <Image source={require('./icons/heart.png')} style={styles.favourite}/>
+            </View>
         </View>
         </TouchableOpacity>
     );

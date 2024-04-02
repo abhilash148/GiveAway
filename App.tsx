@@ -18,11 +18,13 @@ import Favorites from './Screens/Favorites';
 import Share from './Screens/Share';
 import Logout from './Screens/Logout';
 import NewGiveaway from './Screens/NewGiveaway';
+import { UsernameProvider } from './Screens/UsernameContext';
 
 const Stack = createNativeStackNavigator();
 
 const App = () => {
     return(
+    <UsernameProvider>
         <NavigationContainer>
             <Stack.Navigator initialRouteName="Landing">
                 <Stack.Screen name="Landing" component={Landing} options={{title: 'Landing', headerShown: false}}/>
@@ -38,6 +40,7 @@ const App = () => {
                 <Stack.Screen name="NewGiveaway" component={NewGiveaway} option={{title:'NewGiveaway'}}/>
             </Stack.Navigator>
         </NavigationContainer>
+    </UsernameProvider>
     );
 };
 

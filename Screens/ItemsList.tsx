@@ -1,5 +1,5 @@
 import React, { useState, useEffect} from "react";
-import {View, Text, StyleSheet, ScrollView, TextInput, Pressable} from 'react-native';
+import {View, Text, StyleSheet, ScrollView, TextInput, Pressable, Alert} from 'react-native';
 import Item from "./Item";
 import firestore from "@react-native-firebase/firestore";
 import { useUsername } from './UsernameContext';
@@ -62,12 +62,11 @@ const ItemsList = ({navigation}) => {
 
     useEffect(()=>{ const getGiveaways = async ()=>{
             try{
-
-                const queryOutput = await firestore()
-                                        .collection('Giveaways')
-                                        .where('category','==',route.params?.category)
-                                        .get();
-
+                let query = firestore().collection('Giveaways');
+                if (route.params && route.params.category !== undefined){
+                    query = query.where('category','==',route.params?.category);
+                }
+                const queryOutput = await query.get();
                 const fetchedGiveaways = queryOutput.docs.map(doc => ({id:doc.id, ...doc.data()}));
                 setcategoryGiveaways(fetchedGiveaways);
                 setFilteredData(fetchedGiveaways);

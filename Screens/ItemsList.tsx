@@ -56,6 +56,7 @@ const styles = StyleSheet.create({
 const ItemsList = ({navigation}) => {
 
     const [categoryGiveaways,setcategoryGiveaways] = useState([]);
+    const [filteredData,setFilteredData] = useState([]);
     const {userName} = useUsername();
     const route = useRoute();
 
@@ -65,11 +66,11 @@ const ItemsList = ({navigation}) => {
                 const queryOutput = await firestore()
                                         .collection('Giveaways')
                                         .where('category','==',route.params?.category)
-                                        .where('userName','==',userName)
                                         .get();
 
                 const fetchedGiveaways = queryOutput.docs.map(doc => ({id:doc.id, ...doc.data()}));
                 setcategoryGiveaways(fetchedGiveaways);
+                setFilteredData(fetchedGiveaways);
             }
             catch (error) {
                 Alert.alert(error.message);
@@ -91,6 +92,16 @@ const ItemsList = ({navigation}) => {
 
     const handleSearch = (text: string) => {
         setSearchText(text);
+        if(text) {
+            const newData = categoryGiveaways.filter(item => {
+                    const itemData = item.title.toLowerCase();
+                    const textData = text.toLowerCase();
+                    return itemData.indexOf(textData) > -1;
+            })
+            setFilteredData(newData);
+        } else {
+            setFilteredData(categoryGiveaways);
+        }
     };
 
     return (
@@ -107,7 +118,7 @@ const ItemsList = ({navigation}) => {
             />
             
             <View style={styles.row}>
-            {categoryGiveaways.map(catGiveaway => (
+            {filteredData.map(catGiveaway => (
                 <Item  key={catGiveaway.id}
                        onPress={() => handlePress(catGiveaway)}
                        id={catGiveaway.id}

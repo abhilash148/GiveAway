@@ -8,6 +8,7 @@ import logout from './icons/logout.png';
 import profilePic from "./images/profilePic.webp";
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { useUsername } from './UsernameContext';
 
 const styles = StyleSheet.create({
     container: {
@@ -81,6 +82,8 @@ type optionProps = {
 
 const Items = (props: optionProps) => {
 
+    const {userName,setUserName,password,setPassword} = useUsername();
+
     const handlePress = (name) => {
         if (name == "Edit profile"){
             props.navigation.navigate('EditProfile')
@@ -95,7 +98,9 @@ const Items = (props: optionProps) => {
             props.navigation.navigate('Share')
         }
         else if (name == "Logout"){
-            props.navigation.navigate('Logout')
+            setUserName('')
+            setPassword('')
+            props.navigation.navigate('Login')
         }
     };
 

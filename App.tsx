@@ -16,7 +16,6 @@ import EditProfile from './Screens/EditProfile';
 import MyGiveaways from './Screens/MyGiveaways';
 import Favorites from './Screens/Favorites';
 import Share from './Screens/Share';
-import Logout from './Screens/Logout';
 import NewGiveaway from './Screens/NewGiveaway';
 import { UsernameProvider } from './Screens/UsernameContext';
 import ItemDescription from './Screens/ItemDescription';
@@ -38,7 +37,6 @@ const App = () => {
                 <Stack.Screen name="MyGiveaways" component={MyGiveaways} option={{title:'MyGiveaways'}}/>
                 <Stack.Screen name="Favorites" component={Favorites} options={{title:'Favorites'}}/>
                 <Stack.Screen name="Share" component={Share} options={{title:'Share'}}/>
-                <Stack.Screen name="Logout" component={Logout} option={{title:'Logout'}}/>
                 <Stack.Screen name="NewGiveaway" component={NewGiveaway} option={{title:'NewGiveaway'}}/>
                 <Stack.Screen name="ItemDescription" component={ItemDescription} option={{title:'ItemDescription'}}/>
                 <Stack.Screen name="ItemsList" component={ItemsList} option={{title:'ItemsList'}}/>

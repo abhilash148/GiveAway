@@ -60,8 +60,7 @@ const styles = StyleSheet.create({
 
 const Login = ({navigation}) => {
 
-  const [password, setPassword] = useState('');
-  const {userName, setUserName} = useUsername();
+  const {userName, setUserName, password, setPassword} = useUsername();
 
   const handleLogin = async ()=>{
   try{

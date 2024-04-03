@@ -17,6 +17,8 @@ const styles = StyleSheet.create({
     },
     row: {
         flexDirection: 'row',
+        flexWrap: 'wrap',
+        justifyContent: 'space-around'
     },
     search: {
         height: 40,

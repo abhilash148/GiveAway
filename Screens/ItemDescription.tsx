@@ -1,10 +1,16 @@
 import React from "react";
-import {Button, Image, StyleSheet, Text, View, ScrollView, Pressable} from 'react-native';
+import {Button, Image, StyleSheet, Text, View, ScrollView, Pressable, TouchableOpacity, Alert} from 'react-native';
+import {useRoute} from '@react-navigation/native';
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        flexDirection: 'column'
+    },
+    containerSt:{
+        flex: 1,
         flexDirection: 'column',
+        justifyContent:'space-after'
     },
     image: {
         width: '100%',
@@ -16,11 +22,17 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     header: {
-        fontSize: 18,
-        fontWeight: 'bold'
+        fontSize: 20,
+        fontWeight: 'bold',
+        color: 'black'
     },
     description: {
         fontSize: 14
+    },
+    descHeader:{
+        fontSize: 18,
+        fontWeight: 'bold',
+        color: 'black'
     },
     favorite: {
         width: 20,
@@ -48,18 +60,30 @@ const styles = StyleSheet.create({
 });
 
 const ItemDescription = () => {
+    const route = useRoute();
+    const itemData = route.params?.giveaway;
+
+    const contactGiver = ()=>{
+
+        Alert.alert("Contacted Giver");
+    }
+
     return (
-        <ScrollView style={styles.container}>
-            <Image source={require('./images/kitchen.png')}/>
+        <ScrollView contentContainerStyle={styles.container}>
+            <Image source={{uri:itemData.imageURL}} style={styles.image}/>
+            <View style={styles.containerSt}>
             <View style={styles.view}>
-                <Text style={styles.header}>Study Table and Chair</Text>
+                <Text style={styles.header}>{itemData.title}</Text>
                 <Image source={require('./icons/heart.png')} style={styles.favorite}/>
             </View>
-            <Text>Description</Text>
-            <Text style={styles.description}>Our standing desk can adjust the height between 28.35''-46.46'' according to your needs. Compared with the ordinary office desk, our height-adjustable desk has 3 memory buttons for different occasions, so press "s" to remember the most-used height. Stand up desk provides plenty of space for laptops and monitors. This adjustable desk uses a high-quality motor with longer service life. The electric standing desk has well-established anti-collision technology, and a safety lock function. It's perfect for preventing collisions or conflicts when an obstacle is detected during movement. It's a great choice that you can not miss!</Text>
-            <Pressable style={styles.button}>
+            <View>
+            <Text style={styles.descHeader}>Description</Text>
+            <Text style={styles.description}>{itemData.description}</Text>
+            </View>
+            <TouchableOpacity style={styles.button} onPress={contactGiver}>
                 <Text style={styles.text}>Contact Giver</Text>
-            </Pressable>
+            </TouchableOpacity>
+            </View>
         </ScrollView>
     );
 };

@@ -5,6 +5,7 @@ import storage from "@react-native-firebase/storage";
 import {launchImageLibrary} from 'react-native-image-picker';
 import { useUsername } from './UsernameContext';
 import RNPickerSelect from 'react-native-picker-select';
+import {useRoute} from '@react-navigation/native';
 
 const styles = StyleSheet.create({
     container: {
@@ -65,18 +66,21 @@ const styles = StyleSheet.create({
 });
 
 const NewGiveaway = () => {
-
-    const [title, setTitle] = useState('');
-    const [description, setDescription] = useState('');
-    const [category, setCategory] = useState('');
-    const [address, setAddress] = useState('');
-    const [city, setCity] = useState('');
-    const [state, setState] = useState('');
-    const [pincode, setPincode] = useState('');
-    const [imageURL, setImageURL] = useState(null);
+    const route = useRoute();
+    const edit = route.params?.edit;
+    const myGiveaway = route.params?.giveaway;
+    const [title, setTitle] = useState(edit === true?myGiveaway.title:'');
+    const [description, setDescription] = useState(edit === true?myGiveaway.description:'');
+    const [category, setCategory] = useState(edit === true?myGiveaway.category:'');
+    const [address, setAddress] = useState(edit === true?myGiveaway.address:'');
+    const [city, setCity] = useState(edit === true?myGiveaway.city:'');
+    const [state, setState] = useState(edit === true?myGiveaway.state:'');
+    const [pincode, setPincode] = useState(edit === true?myGiveaway.pincode:'');
+    const [imageURL, setImageURL] = useState(edit === true?myGiveaway.imageURL:null);
     const {userName} = useUsername();
 
     const uploadImage = ()=>{
+
         launchImageLibrary({}, async response => {
             if(response.errorMessage){
                 Alert.alert("Image Upload Error:" + response.errorMessage);
@@ -188,9 +192,9 @@ const NewGiveaway = () => {
                 keyboardType='decimal-pad'
             />
 
-            <TouchableOpacity style={styles.button} onPress={addGiveaway}>
+            {edit?null:<TouchableOpacity style={styles.button} onPress={addGiveaway}>
                 <Text style={styles.text}>Add Giveaway</Text>
-            </TouchableOpacity>
+            </TouchableOpacity>}
             
         </ScrollView>
     );

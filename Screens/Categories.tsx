@@ -1,5 +1,5 @@
 import React from "react";
-import { Alert, Image, ImageBackground, Pressable, StyleSheet, Text, View } from "react-native";
+import { Alert, Image, ImageBackground, Pressable, StyleSheet, Text, View, TouchableOpacity } from "react-native";
 
 
 type CategoryProps = {
@@ -29,21 +29,21 @@ const styles = StyleSheet.create({
     },
 });
 
-const Category = ({navigation}) => {
+const Category = ({navigation, imgSrc, category}) => {
 
     
     return (
         <View style={styles.container}>
-            <Pressable onPress={() => {
+            <TouchableOpacity onPress={() => {
                 // need to add navigation to next screen
-                navigation.navigate('ItemsList')
+                navigation.navigate('ItemsList',{category})
             }}>
-        <ImageBackground source={require('./images/kitchen.png')} style={styles.image} blurRadius={4}>
+        <ImageBackground source={imgSrc} style={styles.image} blurRadius={4}>
             <View>
-                <Text style={styles.title}>Kitchen</Text>
+                <Text style={styles.title}>{category}</Text>
             </View>
         </ImageBackground>
-        </Pressable>
+        </TouchableOpacity>
         </View>
     );
 };

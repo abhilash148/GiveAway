@@ -1,6 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect} from "react";
 import {View, Text, StyleSheet, ScrollView, TextInput, Pressable} from 'react-native';
 import Item from "./Item";
+import firestore from "@react-native-firebase/firestore";
+import { useUsername } from './UsernameContext';
+import {useRoute} from '@react-navigation/native';
 
 
 const styles = StyleSheet.create({
@@ -50,9 +53,36 @@ const styles = StyleSheet.create({
 
 const ItemsList = ({navigation}) => {
 
+    const [categoryGiveaways,setcategoryGiveaways] = useState([]);
+    const {userName} = useUsername();
+    const route = useRoute();
 
-    const handlePress = () => {
-        navigation.navigate('ItemDescription');
+    useEffect(()=>{ const getGiveaways = async ()=>{
+            try{
+
+                const queryOutput = await firestore()
+                                        .collection('Giveaways')
+                                        .where('category','==',route.params?.category)
+                                        .where('userName','==',userName)
+                                        .get();
+
+                const fetchedGiveaways = queryOutput.docs.map(doc => ({id:doc.id, ...doc.data()}));
+                setcategoryGiveaways(fetchedGiveaways);
+            }
+            catch (error) {
+                Alert.alert(error.message);
+            }
+        }
+
+        const unsubscribe = navigation.addListener('focus',()=>{
+        getGiveaways()
+        });
+
+        return unsubscribe;
+        },[]);
+
+    const handlePress = (giveaway) => {
+        navigation.navigate('ItemDescription',{giveaway});
     };
     
     const [searchText, setSearchText] = useState('');
@@ -75,35 +105,15 @@ const ItemsList = ({navigation}) => {
             />
             
             <View style={styles.row}>
-                <Item onPress={handlePress}/>
-                <Item onPress={handlePress}/>
-            </View>
-            <View style={styles.row}>
-                <Item onPress={handlePress}/>
-                <Item onPress={handlePress}/>
-            </View>
-            <View style={styles.row}>
-                <Item onPress={handlePress}/>
-                <Item onPress={handlePress}/>
-            </View>
-            <View style={styles.row}>
-                <Item onPress={handlePress}/>
-                <Item onPress={handlePress}/>
-            </View>
-            <View style={styles.row}>
-                <Item onPress={handlePress}/>
-                <Item onPress={handlePress}/>
-            </View>
-            <View style={styles.row}>
-                <Item onPress={handlePress}/>
-                <Item onPress={handlePress}/>
+            {categoryGiveaways.map(catGiveaway => (
+                <Item  key={catGiveaway.id}
+                       onPress={() => handlePress(catGiveaway)}
+                       id={catGiveaway.id}
+                       imgSrc = {catGiveaway.imageURL}
+                       objName = {catGiveaway.title}/>
+            ))}
             </View>
         </ScrollView>
-
-        <Pressable style={styles.button} onPress={() => navigation.navigate('NewGiveaway')}>
-            <Text style={styles.text}>New Giveaway</Text>
-        </Pressable>
-
         </View>
     );
 };

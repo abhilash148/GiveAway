@@ -60,7 +60,10 @@ const MyGiveaways = ({navigation}) => {
     useEffect(()=>{ const getGiveaways = async ()=>{
         try{
 
-            const queryOutput = await firestore().collection('Giveaways').where('userName','==',userName).get();
+            const queryOutput = await firestore()
+                                    .collection('Giveaways')
+                                    .where('userName','==',userName)
+                                    .get();
 
             const fetchedGiveaways = queryOutput.docs.map(doc => ({id:doc.id, ...doc.data()}));
             setmyGiveaways(fetchedGiveaways);
@@ -77,8 +80,9 @@ const MyGiveaways = ({navigation}) => {
     return unsubscribe;
     },[]);
 
-    const handlePress = () => {
-        navigation.navigate('ItemDescription');
+    const handlePress = (giveaway) => {
+        const edit = true;
+        navigation.navigate('NewGiveaway',{edit,giveaway});
     };
 
     const [searchText, setSearchText] = useState('');
@@ -104,7 +108,7 @@ const MyGiveaways = ({navigation}) => {
             <View style={styles.row}>
             {myGiveaways.map(myGiveaway => (
                 <Item  key={myGiveaway.id}
-                       onPress={handlePress}
+                       onPress={()=>handlePress(myGiveaway)}
                        id={myGiveaway.id}
                        imgSrc = {myGiveaway.imageURL}
                        objName = {myGiveaway.title}/>

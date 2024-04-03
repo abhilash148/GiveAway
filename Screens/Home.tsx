@@ -19,9 +19,9 @@ const Home = ({navigation}) => {
 
     return (
         <ScrollView style={styles.container}>
-            <Category navigation={navigation}/>
-            <Category navigation={navigation}/>
-            <Category navigation={navigation}/>
+            <Category navigation={navigation} imgSrc={require('./images/kitchen.png')} category={'KITCHEN'}/>
+            <Category navigation={navigation} imgSrc={require('./images/LivingRoom.jpeg')} category={'LIVING ROOM'}/>
+            <Category navigation={navigation} imgSrc={require('./images/BedRoom.jpeg')} category={'BED ROOM'}/>
         </ScrollView>
     );
 

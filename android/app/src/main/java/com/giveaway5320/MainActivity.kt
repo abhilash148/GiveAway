@@ -1,4 +1,4 @@
-package com.giveaway
+package com.giveaway5320
 
 import com.facebook.react.ReactActivity
 import com.facebook.react.ReactActivityDelegate

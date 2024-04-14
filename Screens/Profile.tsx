@@ -6,6 +6,7 @@ import favorites from "./icons/favorites.png";
 import share from './icons/share.png';
 import logout from './icons/logout.png';
 import profilePic from "./images/profilePicture.jpeg";
+import {launchImageLibrary} from 'react-native-image-picker';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useUsername } from './UsernameContext';

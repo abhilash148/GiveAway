@@ -36,11 +36,17 @@ const styles = StyleSheet.create({
         height: '100%',
         resizeMode: 'cover' // Maintain aspect ratio and fill the container
     },
+    view: {
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
     name: {
-
+        fontWeight: 'bold',
+        color: 'black',
     },
     email: {
-
+        color: 'black',
     },
     options: {
         flexDirection: 'row',
@@ -66,6 +72,8 @@ const Profile = ({navigation}) => {
     const [profileData, setProfileData] = useState('');
     const [imageURL, setImageURL] = useState('');
     const {userName} = useUsername();
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
 
     useEffect(()=>{ const getProfile = async ()=>{
           try{
@@ -92,6 +100,8 @@ const Profile = ({navigation}) => {
 
     useEffect(() => {
         setImageURL(profileData.imageURL);
+        setName(profileData.name);
+        setEmail(profileData.email);
      }, [profileData]);
 
     return (
@@ -100,6 +110,10 @@ const Profile = ({navigation}) => {
                 {imageURL?(<Image source={{uri:imageURL}} style={styles.image} />):(
                                      <Image source={profilePic} style={styles.image}/>
                             )}
+            </View>
+            <View style={styles.view}>
+                <Text style={styles.name}>{name}</Text>
+                <Text style={styles.email}>{email}</Text>
             </View>
             <Items navigation={navigation} imageName={edit_icon} name="Edit profile"/>
             <Items navigation={navigation} imageName={mygiveaways} name="My Giveaways"/>

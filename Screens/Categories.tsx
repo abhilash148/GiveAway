@@ -26,6 +26,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         color: 'white',
         fontSize: 20,
+        fontWeight: 'bold',
     },
 });
 
@@ -38,7 +39,7 @@ const Category = ({navigation, imgSrc, category}) => {
                 // need to add navigation to next screen
                 navigation.navigate('ItemsList',{category})
             }}>
-        <ImageBackground source={imgSrc} style={styles.image} blurRadius={4}>
+        <ImageBackground source={imgSrc} style={styles.image} blurRadius={2}>
             <View>
                 <Text style={styles.title}>{category}</Text>
             </View>

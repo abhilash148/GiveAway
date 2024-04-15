@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import { StyleSheet, Text, View, Image, TouchableOpacity, Alert, Linking } from "react-native";
 import edit_icon from "./icons/edit.png";
 import mygiveaways from "./icons/mygiveaways.png";
@@ -10,6 +10,9 @@ import {launchImageLibrary} from 'react-native-image-picker';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useUsername } from './UsernameContext';
+import auth from "@react-native-firebase/auth";
+import firestore from "@react-native-firebase/firestore";
+import storage from "@react-native-firebase/storage";
 
 const styles = StyleSheet.create({
     container: {
@@ -60,10 +63,43 @@ const styles = StyleSheet.create({
 
 const Profile = ({navigation}) => {
 
+    const [profileData, setProfileData] = useState('');
+    const [imageURL, setImageURL] = useState('');
+    const {userName} = useUsername();
+
+    useEffect(()=>{ const getProfile = async ()=>{
+          try{
+
+              const queryOutput = await firestore()
+                                      .collection('Profiles')
+                                      .doc(userName)
+                                      .get();
+
+              const fetchedProfile = { email: queryOutput.id, ...queryOutput.data() };
+              setProfileData(fetchedProfile);
+          }
+          catch (error) {
+              Alert.alert(error.message);
+          }
+    }
+
+    const unsubscribe = navigation.addListener('focus',()=>{
+          getProfile();
+      });
+
+      return unsubscribe;
+    },[]);
+
+    useEffect(() => {
+        setImageURL(profileData.imageURL);
+     }, [profileData]);
+
     return (
         <View style={styles.container}>
             <View style={styles.imgContainer}>
-                <Image source={profilePic} style={styles.image}/>
+                {imageURL?(<Image source={{uri:imageURL}} style={styles.image} />):(
+                                     <Image source={profilePic} style={styles.image}/>
+                            )}
             </View>
             <Items navigation={navigation} imageName={edit_icon} name="Edit profile"/>
             <Items navigation={navigation} imageName={mygiveaways} name="My Giveaways"/>

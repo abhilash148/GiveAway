@@ -4,6 +4,7 @@ import auth from "@react-native-firebase/auth";
 import firestore from "@react-native-firebase/firestore";
 import storage from "@react-native-firebase/storage";
 import {launchImageLibrary} from 'react-native-image-picker';
+import { useUsername } from './UsernameContext';
 
 const styles = StyleSheet.create({
     container: {
@@ -107,8 +108,7 @@ const styles = StyleSheet.create({
 
 
 const Signup = ({navigation}) => {
-  const [password, setPassword] = useState('');
-  const [userName, setUserName] = useState('');
+  const {userName, setUserName, password, setPassword} = useUsername();
   const [phoneNumber, setPhoneNumber] = useState('');
   const [name,setName] = useState('');
   const [imageURL, setImageURL] = useState('');

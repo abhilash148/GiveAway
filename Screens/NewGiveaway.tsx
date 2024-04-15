@@ -135,13 +135,11 @@ const NewGiveaway = () => {
 
     return (
         <ScrollView style={styles.container}>
-
             <View style={styles.uploadImageView}>
-            {imageURL?(<Image source={{uri:imageURL}} style={{ width: 200, height: 200 }} />):(
                 <TouchableOpacity onPress={uploadImage} style={styles.placeholder}>
-                     <Text style={styles.placeholderText}>Upload Image</Text>
+                     {imageURL?(<Image source={{uri:imageURL}} style={{ width: 200, height: 200 }} />):(
+                     <Text style={styles.placeholderText}>Upload Image</Text>)}
                 </TouchableOpacity>
-            )}
             </View>
 
             <TextInput

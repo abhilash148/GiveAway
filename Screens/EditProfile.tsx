@@ -70,7 +70,7 @@ const EditProfile = ({navigation})=>{
 
       <TextInput
         style={styles.email}
-        placeholder='Email'
+        placeholder='Name'
         onChangeText={newText => setUserName(newText)}
         defaultValue={userName}
         keyboardType='email-address'

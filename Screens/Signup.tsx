@@ -187,11 +187,11 @@ const Signup = ({navigation}) => {
 
       <Text style={styles.welcome}>Become a Member!</Text>
       <View style={styles.imgContainer}>
-          {imageURL?(<Image source={{uri:imageURL}} style={styles.image} />):(
-              <TouchableOpacity onPress={uploadImage} style={styles.placeholder}>
-                   <Text style={styles.placeholderText}>Upload Image</Text>
-              </TouchableOpacity>
-          )}
+          <TouchableOpacity onPress={uploadImage} style={styles.placeholder}>
+              {imageURL?(<Image source={{uri:imageURL}} style={styles.image} />):(
+                       <Text style={styles.placeholderText}>Upload Image</Text>
+              )}
+          </TouchableOpacity>
       </View>
       <TextInput
           style={styles.name}

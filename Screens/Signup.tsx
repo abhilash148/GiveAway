@@ -156,7 +156,7 @@ const Signup = ({navigation}) => {
             try{
                 const response = await auth().createUserWithEmailAndPassword(userName,password);
 
-                const response2 = await firestore().collection('Profiles').add({
+                const response2 = await firestore().collection('Profiles').doc(userName).set({
                                     name: name,
                                     email: userName,
                                     phoneNumber: phoneNumber,

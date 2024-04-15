@@ -1,4 +1,4 @@
-package com.giveaway.140410
+package com.giveaway.g140410
 
 import android.app.Application
 import com.facebook.react.PackageList

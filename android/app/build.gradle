@@ -74,9 +74,9 @@ android {
     buildToolsVersion rootProject.ext.buildToolsVersion
     compileSdk rootProject.ext.compileSdkVersion
 
-    namespace "com.giveaway.140410"
+    namespace "com.giveaway.g140410"
     defaultConfig {
-        applicationId "com.giveaway.140410"
+        applicationId "com.giveaway.g140410"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 3

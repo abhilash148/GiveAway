@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, View, Image, TouchableOpacity, Alert } from "react-native";
+import { StyleSheet, Text, View, Image, TouchableOpacity, Alert, Linking } from "react-native";
 import edit_icon from "./icons/edit.png";
 import mygiveaways from "./icons/mygiveaways.png";
 import favorites from "./icons/favorites.png";
@@ -67,7 +67,7 @@ const Profile = ({navigation}) => {
             </View>
             <Items navigation={navigation} imageName={edit_icon} name="Edit profile"/>
             <Items navigation={navigation} imageName={mygiveaways} name="My Giveaways"/>
-            <Items navigation={navigation} imageName={favorites} name="Favorites"/>
+            <Items navigation={navigation} imageName={favorites} name="Privacy Policy"/>
             <Items navigation={navigation} imageName={share} name="Share"/>
             <Items navigation={navigation} imageName={logout} name="Logout"/>
         </View>
@@ -92,11 +92,19 @@ const Items = (props: optionProps) => {
         else if (name == "My Giveaways"){
             props.navigation.navigate('MyGiveaways')
         }
-        else if (name == "Favorites"){
-            props.navigation.navigate('Favorites')
+        else if (name == "Privacy Policy"){
+            // props.navigation.navigate('Favorites')
+            const url = 'https://www.freeprivacypolicy.com/live/e9f144f6-15c0-45ba-a1f9-d4bd63684a14';
+            Linking.openURL(url)
+            .then(() => console.log("Success"))
+            .catch(error => Alert.alert('Unable to open link', error, [{text: 'Dismiss'}]))
         }
         else if (name == "Share"){
-            props.navigation.navigate('Share')
+            // props.navigation.navigate('Share')
+            const url = 'https://play.google.com/store/search?q=giveaway&c=apps&hl=en_US&gl=US';
+            Linking.openURL(url)
+            .then(() => console.log("Success"))
+            .catch(error => Alert.alert('Unable to open link', error, [{text: 'Dismiss'}]))
         }
         else if (name == "Logout"){
             setUserName('')

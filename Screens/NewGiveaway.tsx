@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
         }
 });
 
-const NewGiveaway = () => {
+const NewGiveaway = ({navigation}) => {
     const route = useRoute();
     const edit = route.params?.edit;
     const myGiveaway = route.params?.giveaway;
@@ -106,7 +106,9 @@ const NewGiveaway = () => {
         if (category == ''){
             Alert.alert("Please select a category");
         }
-        else if(category !== "KITCHEN" && category !== "LIVING ROOM" && category !== "BED ROOM"){
+        else if(category !== "KITCHEN" && category !== "LIVING ROOM" && category !== "BED ROOM"
+                && category !== "LAWN" && category !== "BATH ROOM" && category !== "BASEMENT"
+                && category !== "GARAGE"){
             Alert.alert("Category is invalid, Refer Home Page");
         }
         else if (imageURL !== null){
@@ -122,7 +124,8 @@ const NewGiveaway = () => {
                     imageURL: imageURL,
                     userName: userName
                 });
-                Alert.alert('Giveaway Added' + response);
+                Alert.alert('Giveaway Added');
+                navigation.navigate('MyGiveaways')
             }
             catch (error) {
                 Alert.alert(error.message);
@@ -136,7 +139,8 @@ const NewGiveaway = () => {
     return (
         <ScrollView style={styles.container}>
             <View style={styles.uploadImageView}>
-                <TouchableOpacity onPress={uploadImage} style={styles.placeholder}>
+                <TouchableOpacity onPress={uploadImage} style={styles.placeholder}
+                    disabled={edit ? true : false}>
                      {imageURL?(<Image source={{uri:imageURL}} style={{ width: 200, height: 200 }} />):(
                      <Text style={styles.placeholderText}>Upload Image</Text>)}
                 </TouchableOpacity>
@@ -147,18 +151,21 @@ const NewGiveaway = () => {
                 placeholder='Object Name'
                 onChangeText={newText => setTitle(newText)}
                 defaultValue={title}
+                editable={edit ? false : true}
             />
             <TextInput
                 style={styles.input}
                 placeholder='Description'
                 onChangeText={newText => setDescription(newText)}
                 defaultValue={description}
+                editable={edit ? false : true}
             />
             <TextInput
                 style={styles.input}
                 placeholder='Category'
                 onChangeText={newText => setCategory(newText.toUpperCase())}
                 defaultValue={category}
+                editable={edit ? false : true}
             />
             <TextInput
                 style={styles.input}
@@ -166,6 +173,7 @@ const NewGiveaway = () => {
                 onChangeText={newText => setAddress(newText)}
                 defaultValue={address}
                 multiline={true}
+                editable={edit ? false : true}
             />
 
             <TextInput
@@ -173,6 +181,7 @@ const NewGiveaway = () => {
                 placeholder='City'
                 onChangeText={newText => setCity(newText)}
                 defaultValue={city}
+                editable={edit ? false : true}
             />
 
             <TextInput
@@ -180,6 +189,7 @@ const NewGiveaway = () => {
                 placeholder='State'
                 onChangeText={newText => setState(newText)}
                 defaultValue={state}
+                editable={edit ? false : true}
             />
 
             <TextInput
@@ -188,6 +198,7 @@ const NewGiveaway = () => {
                 onChangeText={newText => setPincode(newText)}
                 defaultValue={pincode}
                 keyboardType='decimal-pad'
+                editable={edit ? false : true}
             />
 
             {edit?null:<TouchableOpacity style={styles.button} onPress={addGiveaway}>

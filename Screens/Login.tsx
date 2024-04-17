@@ -61,17 +61,45 @@ const styles = StyleSheet.create({
 const Login = ({navigation}) => {
 
   const {userName, setUserName, password, setPassword} = useUsername();
+  const [error1, setErrors] = useState({});
+  const [isFormValid, SetIsFormValid] = useState(false);
+
+
+  const validateForm = () => {
+    let errors = {};
+    
+    if (!userName) {
+      errors.email = "Email is required";
+    } else if (userName.length < 6) {
+      errors.email = 'Invalid email';
+    }
+
+    if (!password) {
+      errors.password = 'Password is required';
+    } else if (password.length < 8) {
+      errors.password = 'Password should be atleast 8 characters long';
+    }
+
+    setErrors(errors);
+    SetIsFormValid(Object.keys(errors).length === 0);
+
+  };
 
   const handleLogin = async ()=>{
-  try{
-          const userCredential = await auth().signInWithEmailAndPassword(userName,password);
-          navigation.navigate('Dashboard')
+    validateForm();
+    if (isFormValid) {
+      try{
+        const userCredential = await auth().signInWithEmailAndPassword(userName,password);
+        navigation.navigate('Dashboard')
       }
       catch (error) {
-             // Handle login errors
-             Alert.alert('Login failed' + error.message);
-           }
-       };
+           // Handle login errors
+           Alert.alert('Login failed' + error.message);
+      }
+    } else {
+        Alert.alert('Please fill fields', (error1.email) ? error1.email : error1.password);
+    }
+  };
 
   return (
     <View style={[

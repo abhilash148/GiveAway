@@ -41,7 +41,7 @@ const Item = ({onPress,id,imgSrc,objName}) => {
         <View style={styles.container}>
             <Image source={{uri:imgSrc}} style={styles.image}/>
             <View style={styles.bottom}>
-                <Text>{objName}</Text>
+                <Text style={styles.text}>{objName}</Text>
                 <Image source={require('./icons/heart.png')} style={styles.favourite}/>
             </View>
         </View>

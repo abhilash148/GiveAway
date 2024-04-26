@@ -21,6 +21,7 @@ const styles = StyleSheet.create({
     borderColor: 'black',
     borderWidth: 1,
     borderRadius: 10,
+    color: 'black',
     width: '100%',
   },
   password: {
@@ -54,6 +55,9 @@ const styles = StyleSheet.create({
   },
   signup: {
     color: 'blue',
+  },
+  bottomText: {
+    color: 'black',
   },
 
 });
@@ -131,7 +135,7 @@ const Login = ({navigation}) => {
       </Pressable>
 
       <View style={styles.bottom}>
-        <Text>Don't have an account?</Text>
+        <Text style={styles.bottomText}>Don't have an account?</Text>
         <Text style={styles.signup} onPress={() => navigation.navigate('Signup')}>Sign up now</Text>
       </View>
 

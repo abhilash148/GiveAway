@@ -25,6 +25,7 @@ const styles = StyleSheet.create({
       borderColor: 'gray',
       borderWidth: 1,
       borderRadius: 10,
+      color: 'black',
       width: '100%',
     },
     password: {
@@ -49,6 +50,7 @@ const styles = StyleSheet.create({
           borderColor: 'gray',
           borderWidth: 1,
           borderRadius: 10,
+          color: 'black',
           width:'100%',
     },
     button: {
@@ -102,7 +104,10 @@ const styles = StyleSheet.create({
       fontSize: 16,
       fontWeight: 'bold',
       color: '#757575',
-    }
+    },
+    bottomText: {
+      color: 'black',
+    },
   
   });
 
@@ -228,7 +233,7 @@ const Signup = ({navigation}) => {
       </TouchableOpacity>
 
       <View style={styles.bottom}>
-        <Text>Already have an account?</Text>
+        <Text style={styles.bottomText}>Already have an account?</Text>
         <Text style={styles.signup} onPress={() => navigation.navigate('Login')}>Sign in</Text>
       </View>
 

@@ -64,6 +64,7 @@ const styles = StyleSheet.create({
     iconText: {
 //         paddingTop: 12,
         fontSize: 25,
+        color: 'black',
     },
 });
 

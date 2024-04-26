@@ -27,7 +27,8 @@ const styles = StyleSheet.create({
         color: 'black'
     },
     description: {
-        fontSize: 14
+        fontSize: 14,
+        color: 'black',
     },
     descHeader:{
         fontSize: 18,

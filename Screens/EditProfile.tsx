@@ -25,6 +25,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 10,
     width: '100%',
+    color: 'black',
     marginTop: 16,
   },
   phone: {
@@ -34,6 +35,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 10,
     width: '100%',
+    color: 'black',
     marginTop: 16,
   },
   button: {
